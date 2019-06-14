@@ -1,19 +1,70 @@
 const axios = require('axios');
+const bcrypt = require('bcryptjs');
 
 const { authenticate } = require('../auth/authenticate');
+const db = require('../database/models');
+const validateBody = require('../middleware/validateBody');
+const errorRef = require('../helpers/errorRef');
+const generateToken = require('../helpers/generateToken');
+
+const bodyReqs = {
+  username: {
+    required: true,
+    type: 'string',
+  },
+  password: {
+    required: true,
+    type: 'string',
+  }
+}
 
 module.exports = server => {
-  server.post('/api/register', register);
+  server.post('/api/register', validateBody(bodyReqs), register);
   server.post('/api/login', login);
   server.get('/api/jokes', authenticate, getJokes);
 };
 
-function register(req, res) {
+async function register(req, res) {
   // implement user registration
+  try {
+    const user = req.body;
+    const hash = bcrypt.hashSync(user.password, 8);
+
+    const saved = await db.add({
+      ...user,
+      password: hash,
+    });
+
+    const token = generateToken(user);
+
+    res.status(201).json({
+      message: `Registered ${saved.username}`,
+      token,
+    });
+  } catch (error) {
+    res.status(500).json(errorRef(error));
+  }
 }
 
-function login(req, res) {
+async function login(req, res) {
   // implement user login
+  try {
+    let { username, password } = req.body;
+    const user = await db.findBy({ username }).first();
+
+    if (!(user && bcrypt.compareSync(password, user.password))) return res.status(401).json({
+      message: 'Invalid Credentials',
+    });
+
+    const token = generateToken(user);
+
+    res.json({
+      message: `Welcome ${user.username}`,
+      token,
+    });
+  } catch (error) {
+    res.status(500).json(errorRef(error));
+  }
 }
 
 function getJokes(req, res) {
