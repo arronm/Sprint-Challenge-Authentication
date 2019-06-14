@@ -31,7 +31,7 @@ const AuthForm = (props) => {
         (method !== 'login' || method !== 'register') && <Redirect to='/auth/login' />
       }
       {
-        props.loggedIn && <Redirect to='/users' />
+        props.loggedIn && <Redirect to='/jokes' />
       }
       <form onSubmit={handleSubmit} className={style.AuthForm}>
         <h4>{ method === 'login' ? 'Login' : 'Register' }</h4>

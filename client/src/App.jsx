@@ -13,13 +13,13 @@ import Jokes from './components/Jokes';
 const App = () => {
   const [state, setState] = useState({
     loggedIn: !!auth.get() || false,
-    users: [],
+    jokes: [],
   });
 
   const { loggedIn } = state;
 
   useEffect(() => {
-    loggedIn && getUsers();
+    loggedIn && getJokes();
 
     return () => {
       setState(state => ({
@@ -29,7 +29,7 @@ const App = () => {
     };
   }, [loggedIn]);
 
-  const getUsers = async () => {
+  const getJokes = async () => {
     try {
       const { data: jokes} = await axiosWithAuth().get(`http://localhost:4444/api/jokes`);
       setState(state => ({
@@ -78,7 +78,7 @@ const App = () => {
             <AuthForm {...routerProps} handleSubmit={handleSubmit} loggedIn={state.loggedIn} />
         )}
       />
-      <PrivateRoute path="/users" component={Jokes} jokes={state.jokes} />
+      <PrivateRoute path="/jokes" component={Jokes} jokes={state.jokes} />
     </>
   );
 }
