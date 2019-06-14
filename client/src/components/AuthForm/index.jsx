@@ -6,7 +6,6 @@ import style from './AuthForm.module.scss';
 const AuthForm = (props) => {
   const [state, setState] = useState({
     username: '',
-    department: '',
     password: '',
   });
 
@@ -37,17 +36,6 @@ const AuthForm = (props) => {
       <form onSubmit={handleSubmit} className={style.AuthForm}>
         <h4>{ method === 'login' ? 'Login' : 'Register' }</h4>
         <input id='username' name="username" onChange={handleOnChange} value={state.username} type="text" placeholder='Username'/>
-        {
-          method === 'register'
-            && <input
-              id='department'
-              name="department"
-              onChange={handleOnChange}
-              value={state.department}
-              placeholder='Department'
-              type="text"
-            />
-        }
         <input id='password' name="password" onChange={handleOnChange} value={state.password} type="password" placeholder='Password'/>
         <input type="submit" value={ method === 'login' ? 'Login' : 'Register' } />
       </form>
