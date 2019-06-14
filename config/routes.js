@@ -46,8 +46,25 @@ async function register(req, res) {
   }
 }
 
-function login(req, res) {
+async function login(req, res) {
   // implement user login
+  try {
+    let { username, password } = req.body;
+    const user = await db.findBy({ username }).first();
+
+    if (!(user && bcrypt.compareSync(password, user.password))) return res.status(401).json({
+      message: 'Invalid Credentials',
+    });
+
+    const token = generateToken(user);
+
+    res.json({
+      message: `Welcome ${user.username}`,
+      token,
+    });
+  } catch (error) {
+    res.status(500).json(errorRef(error));
+  }
 }
 
 function getJokes(req, res) {
