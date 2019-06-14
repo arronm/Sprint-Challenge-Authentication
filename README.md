@@ -28,10 +28,14 @@ Implement an User Authentication System in order to access the jokes from the Jo
 
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
-1. What is the purpose of using _sessions_?
-1. What does bcrypt do to help us store passwords in a secure manner.
-1. What does bcrypt do to slow down attackers?
-1. What are the three parts of the JSON Web Token?
+ - [x] What is the purpose of using _sessions_?
+  - A simple way to store data for individual users. Cannot be accessed through JS if configured correctly. Can be expired or removed from the database to invalidate. Requires a db hit for every action the user takes that requires authorization.
+ - [x] What does bcrypt do to help us store passwords in a secure manner.
+  - Using a one-way hashing algorithm that has a time cost involved so finding collisions with rainbow tables take significantly longer to generate.
+ - [x] What does bcrypt do to slow down attackers?
+  - Oh, this question is here too. It adds the concept of time to the hashing algorithm in that it increases the required computational power by increasing the number of times the password is hashed.
+ - [x] What are the three parts of the JSON Web Token?
+  - The J, the W, and the T! Right? ... Okay, they're the header, payload, and signature.
 
 ## Project Set Up
 
@@ -58,13 +62,13 @@ Helpful Tip on Testing this Project:
 
 ## Minimum Viable Product
 
-- [ ] Implement the `register` function inside `/config/routes.js`.
-- [ ] Implement the `login` function inside `/config/routes.js`.
-- [ ] Use JSON Web Tokens for authentication.
+- [x] Implement the `register` function inside `/config/routes.js`.
+- [x] Implement the `login` function inside `/config/routes.js`.
+- [x] Use JSON Web Tokens for authentication.
 
 **Note** The migrations and a database with empty users is already included
 
-- [ ] Add the authentication related code. If everything is done correctly, visiting `/api/jokes` should return a list of jokes.
+- [x] Add the authentication related code. If everything is done correctly, visiting `/api/jokes` should return a list of jokes.
 
 ## Stretch Problem: Build a front end to interface with your User Auth System
 
