@@ -1,0 +1,20 @@
+.Navigation_container {
+  background: #F5f5f5;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.Navigation {
+  width: 100%;
+  max-width: 1200px;
+  padding: 15px;
+  height: 60px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  a {
+    margin: 0 15px;
+  }
+}
